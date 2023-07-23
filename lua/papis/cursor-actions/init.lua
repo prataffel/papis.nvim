@@ -45,6 +45,10 @@ local function get_ref_under_cursor()
   end
   -- remove all punctuation characters at the beginning and end of string
   ref = ref:gsub("^[%p]*(.-)[%p]*$", "%1")
+  --- find the suffix
+  local suffix = string.sub(cite_format, prefix_end + 3)
+  local suffix_start = string.find(ref, suffix)
+  ref = string.sub(ref, 1, suffix_start -1)
 
   return ref
 end
