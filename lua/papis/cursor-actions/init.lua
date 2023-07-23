@@ -48,7 +48,9 @@ local function get_ref_under_cursor()
   --- find the suffix
   local suffix = string.sub(cite_format, prefix_end + 3)
   local suffix_start = string.find(ref, suffix)
-  ref = string.sub(ref, 1, suffix_start -1)
+  if suffix_start then
+      ref = string.sub(ref, 1, suffix_start -1)
+  end
 
   return ref
 end
