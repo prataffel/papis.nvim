@@ -165,7 +165,7 @@ enable_modules = {
 -- relative path, relying on plenary.nvim
 cite_formats = {
   tex = { "\\cite{%s}", "\\cite[tp]?%*?{%s}" },
-  markdown = "[%s]($F)",
+  markdown = {"[%s]($F)", "%[%s]"},
   rmd = "@%s",
   plain = "%s",
   org = { "[cite:@%s]", "%[cite:@%s]" },
