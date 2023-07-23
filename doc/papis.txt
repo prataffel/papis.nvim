@@ -224,9 +224,11 @@ Full list of configuration options (with defaults):
     -- Note that the first entry is a string (where e.g. `\` needs to be excaped as `\\`)
     -- and the second a lua pattern (where magic characters need to be escaped with
     -- `%`; https://www.lua.org/pil/20.2.html).
+    -- $F will be expanded to the absolute path of the first file, $f to the
+    -- relative path, relying on plenary.nvim
     cite_formats = {
       tex = { "\\cite{%s}", "\\cite[tp]?%*?{%s}" },
-      markdown = "@%s",
+      markdown = "[%s]($F)",
       rmd = "@%s",
       plain = "%s",
       org = { "[cite:@%s]", "%[cite:@%s]" },
