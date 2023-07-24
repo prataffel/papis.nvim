@@ -45,6 +45,9 @@ local function format_search_string(entry)
   if do_incl_str("type") then
     table.insert(str_elements, entry["type"])
   end
+  if do_incl_str("ref") then
+    table.insert(str_elements, entry["ref"])
+  end
   if do_incl_str("tags") then
     table.insert(str_elements, table.concat(entry["tags"], " "))
   end
