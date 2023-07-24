@@ -19,6 +19,7 @@ local links = {
   ResultsAuthor = "PreProc",
   ResultsYear = "Statement",
   ResultsTitle = "Struct",
+  ResultsRef = "Comment",
 }
 
 ---Sets up all the default highlight groups
