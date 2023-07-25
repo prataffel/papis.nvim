@@ -7,13 +7,31 @@
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 local Path = require("plenary.path")
+local db = require("papis.sqlite-wrapper")
 
 local utils = require("papis.utils")
 
 local M = {}
 
+--- This is very similar to the _get_parent function of plenary, but the latter
+--- will not respect symlinks.
+local get_parent = (function()
+    local os = string.lower(jit.os)
+    local sep = ""
+    if os ~= "windows" then
+      sep = "/"
+    else
+      sep = "\\"
+    end
+    local formatted = string.format("^(.+)%s[^%s]+", sep, sep)
+    return function(path)
+        return Path:new{path:match(formatted)}
+    end
+end)()
+
+
 ---This function inserts a formatted reference string at the cursor
----@param format_string string @The string to be inserted. 
+---@param format_string string @The string to be inserted.
 ---       $F will be replaced with the absolute location of the first file
 ---       attached to the entry, $f with the relative path.
 ---@return function
@@ -28,6 +46,13 @@ M.ref_insert = function(format_string)
         entry = entry:gsub("$F", file_path:normalize())
         entry = entry:gsub("$f", file_path:make_relative())
     end
+    local info_path = Path:new{db.metadata:get_value({ entry = action_state.get_selected_entry().id.id}, "path")}
+    entry = entry:gsub("$I", info_path:normalize())
+    entry = entry:gsub("$i", info_path:make_relative())
+    --- `get_parent` might work better w. sym-links
+    local dir_path = get_parent(info_path:normalize())
+    entry = entry:gsub("$D", dir_path:normalize())
+    entry = entry:gsub("$d", dir_path:make_relative())
     actions.close(prompt_bufnr)
     vim.api.nvim_put({ entry }, "", false, true)
   end

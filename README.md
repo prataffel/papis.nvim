@@ -163,6 +163,9 @@ enable_modules = {
 -- `%`; https://www.lua.org/pil/20.2.html).
 -- $F will be expanded to the absolute path of the first file, $f to the
 -- relative path, relying on plenary.nvim
+-- Furthermore, $I will be expanded to the absolute path of the info.yaml
+-- file, $i to the -- relative path. $D and $d are expanded to the
+-- absolute or relative path of the papis directory for this entry.
 cite_formats = {
   tex = { "\\cite{%s}", "\\cite[tp]?%*?{%s}" },
   markdown = {"[%s]($F)", "%[%s]"},
